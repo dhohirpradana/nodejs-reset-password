@@ -83,7 +83,7 @@ async function passwordUpdate(req, res) {
   const nowUtcSeconds = Math.floor(Date.now() / 1000);
   console.log("nowUtcSeconds: ", nowUtcSeconds);
 
-  if (!userPasswordResetKey || passwordResetTimestamp) {
+  if (!userPasswordResetKey || passwordResetTimestamp == 0) {
     return res
       .status(404)
       .json({ error: "Password reset link invalid or expired." });
