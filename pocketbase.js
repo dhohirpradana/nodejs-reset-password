@@ -43,15 +43,7 @@ async function adminToken() {
 async function passwordUpdate(req, res) {
   const data = req.body;
 
-  const { email, newPass, confirmNewPass, key } = data;
-
-  if (!email) {
-    return res.status(402).json({ error: "email is required!" });
-  }
-
-  if (!isValidEmail(email)) {
-    return res.status(402).json({ error: "invalid email!" });
-  }
+  const { newPass, confirmNewPass, key } = data;
 
   if (!newPass) {
     return res.status(402).json({ error: "newPass is required!" });
@@ -73,7 +65,7 @@ async function passwordUpdate(req, res) {
 
   var token = await adminToken();
 
-  const user = await userByEmail(email, res);
+  const user = await userByPasswordResetKey(key, res);
   const {
     id: userId,
     passwordResetKey: userPasswordResetKey,
@@ -144,6 +136,25 @@ async function userByEmail(email, res) {
     const statusCode = error.status ?? 500;
 
     return res.status(statusCode).json(errorResponse);
+  }
+}
+
+async function userByPasswordResetKey(key, res) {
+  var token = await adminToken();
+  try {
+    const userData = await pb
+      .collection("users")
+      .getFirstListItem(`passwordResetKey="${key}"`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    // console.log(userData);
+    return userData;
+  } catch (error) {
+    console.log(error);
+
+    return res.status(404).json({ error: "Password reset link invalid!" });
   }
 }
 
