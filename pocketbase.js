@@ -225,4 +225,4 @@ async function updateUserPasswordReset(req, res) {
   }
 }
 
-export { passwordUpdate, updateUserPasswordReset };
+export { passwordUpdate, updateUserPasswordReset, userByPasswordResetKey };

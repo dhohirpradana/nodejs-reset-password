@@ -1,10 +1,24 @@
 import express from "express";
-import { passwordUpdate, updateUserPasswordReset } from "./pocketbase.js";
+import {
+  passwordUpdate,
+  updateUserPasswordReset,
+  userByPasswordResetKey,
+} from "./pocketbase.js";
 
 const app = express();
 const port = 3000;
 
 app.use(express.json());
+
+app.post("/key-check", (req, res) => {
+  const { key } = data;
+
+  if (!key) {
+    return res.status(402).json({ error: "key is required!" });
+  }
+
+  return userByPasswordResetKey(key, res);
+});
 
 app.post("/password-reset-send-mail", (req, res) => {
   return updateUserPasswordReset(req, res);
