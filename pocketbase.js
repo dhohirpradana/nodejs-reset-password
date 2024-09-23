@@ -103,7 +103,7 @@ async function passwordUpdate(req, res) {
         password: newPass,
         passwordConfirm: newPass,
         passwordResetKey: null,
-        passwordResetTimestamp: 0,
+        // passwordResetTimestamp: 0,
       },
       {
         headers: {
