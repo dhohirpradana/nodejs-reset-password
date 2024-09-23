@@ -11,6 +11,7 @@ const port = 3000;
 app.use(express.json());
 
 app.post("/key-check", (req, res) => {
+  const data = req.body;
   const { key } = data;
 
   if (!key) {
