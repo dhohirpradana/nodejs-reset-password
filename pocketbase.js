@@ -10,6 +10,8 @@ const pbAdminEmail = process.env.PB_ADMIN_EMAIL ?? "";
 const pbAdminPassword = process.env.PB_ADMIN_PASSWORD ?? "";
 const pb = new PocketBase(pbUrl);
 
+console.log(pbUrl);
+
 // async function checkToken(token) {
 //   try {
 //     pb.authStore.save(token, null);
@@ -111,10 +113,12 @@ async function passwordUpdate(req, res) {
     );
     return res.status(200).json({ message: "Password updated" });
   } catch (error) {
-    const errorResponse = error.response ? error.response.data : null;
-    const statusCode = error.response ? error.response.status : null;
+    const errorResponse = error.response.data.password.message
+      ? error.response.data.password.message
+      : error.response.data;
+    const statusCode = error.sttaus ? error.status : 400;
 
-    return res.status(statusCode).json(errorResponse);
+    return res.status(statusCode).json({ error: errorResponse });
   }
 }
 
