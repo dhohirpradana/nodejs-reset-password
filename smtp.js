@@ -7,6 +7,7 @@ var name = process.env.NAME;
 var host = process.env.HOST;
 var user = process.env.USER;
 var pass = process.env.PASS;
+var domain = process.env.DOMAIN;
 var serviceName = process.env.SERVICE_NAME;
 
 function sendMail(email, key, res) {

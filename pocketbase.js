@@ -30,7 +30,8 @@ async function adminToken() {
   // console.log("Admin Password:", pbAdminPassword);
 
   try {
-    await pb.admins.authWithPassword(pbAdminEmail, pbAdminPassword);
+    // await pb.admins.authWithPassword(pbAdminEmail, pbAdminPassword);
+    await pb.collection("_superusers").authWithPassword(pbAdminEmail, pbAdminPassword);
 
     console.log("Admin: ", pb.authStore.isValid);
     console.log("Admin Token: ", pb.authStore.token);
